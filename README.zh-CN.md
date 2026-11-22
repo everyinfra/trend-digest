@@ -4,7 +4,7 @@
 
 [English](README.md)
 
-![简报效果](docs/assets/preview.png)
+![中文预设的网页存档](docs/assets/preview-zh.png)
 
 网页存档示例：https://everyinfra.github.io/trend-digest/
 
