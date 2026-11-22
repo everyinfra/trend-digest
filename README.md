@@ -17,7 +17,9 @@ Demo archive: https://everyinfra.github.io/trend-digest/
    GitHub turns off workflows in forks until you do this.
 2. In your new repository, open **Settings > Secrets and variables > Actions > New repository secret**
    and add two secrets:
-   - `EVERYINFRA_API_KEY`: get a key at https://everyinfra.com/?utm_source=github-template
+   - `EVERYINFRA_API_KEY`: sign up at https://everyinfra.com/?utm_source=github-template and create a key
+     in the console. A new account can claim a $1 trial credit, valid for 24 hours, which is enough
+     to try this. To keep the digest running, top up your balance. The smallest top-up is $10.
    - `DISCORD_WEBHOOK_URL`: in Discord, open the channel settings > **Integrations** > **Webhooks** >
      **New Webhook** > **Copy Webhook URL**.
 3. Open **Actions > Trend digest > Run workflow**. The digest arrives in a minute or two.
@@ -25,6 +27,7 @@ Demo archive: https://everyinfra.github.io/trend-digest/
 
 The `docs/` folder of this template holds the archive of our own channel. For a clean start in
 your copy, delete `docs/archive/` and `docs/data/` (keep `docs/assets/` and `docs/index.html`).
+The 7-day memory is in `state/state.json`, which the first run creates.
 
 ## Change what it collects
 
@@ -52,19 +55,39 @@ params = { keyword = "WebAssembly", time_window = "day" }
 limit = 2
 ```
 
+This example is shorter than the default file. The default `digest.toml` has one GitHub source, one
+Product Hunt source, two `reddit/subreddit_posts` sources and two `google_news/search` sources. To
+follow another subreddit or topic, change `subreddit` or `keyword` in the entry you want.
+
+Parameters:
+
+| Source | `params` |
+| --- | --- |
+| `reddit/subreddit_posts` | `subreddit` (required). `sort`: `newest`, `popular`, `relevance`, `rising`, `top`. `date_range`: `all_time`, `past_hour`, `past_day`, `past_week`, `past_month`, `past_year`; Reddit applies it only with `sort = "top"`. |
+| `google_news/search` | `keyword` (required, one or more words). `time_window`: `hour`, `day`, `week`, `month`, `year`. Also `country` and `language`. |
+| `producthunt/trending` | `days`: 1 to 30. |
+| `weibo/trending` | `board`: `hot`, `society`, `entertainment`, `life`, `sports`, `tech`, `acg`. |
+| `twitter/trending` | `country`. |
+
 Supported sources: `github/trending`, `producthunt/trending`, `reddit/subreddit_posts`,
 `reddit/trending_posts`, `twitter/trending`, `google_news/search`, `weibo/trending`,
 `douyin/trending`, `xiaohongshu/trending`. Several sources of the same platform are shown as one
 section, for example `Reddit · r/LocalLLaMA, r/MachineLearning`.
 
 `presets/zh.toml` is a Chinese setup (Weibo, Douyin, GitHub; Xiaohongshu is off by default because
-it costs more). Use it with `--config presets/zh.toml` in `.github/workflows/digest.yml`.
+it costs more). To use it, copy its content over `digest.toml`. You can also keep both files and
+change the command in `.github/workflows/digest.yml` to `python -m trend_digest --config presets/zh.toml`.
 
 An item shown in the last 7 days is not shown again. On Mondays (in your `timezone`) the digest adds
 a weekly list: the repos that gained the most stars (or, when the data has no star counts, the
 repos that stayed on GitHub trending for the most days) and the posts with the most comments.
 
-To change the time, edit the `cron` line in `.github/workflows/digest.yml`. Cron times are UTC.
+To change the time, edit the `cron` line in `.github/workflows/digest.yml` on your default branch.
+Cron times are UTC: `0 1 * * *` runs every day at 01:00 UTC. A minute other than 0, such as
+`7 13 * * *`, avoids the busiest moment on GitHub.
+
+A second run on the same day does not send the items of the first run again. To test with fresh
+items, delete `state/state.json` first.
 
 ## Channels
 
@@ -83,7 +106,8 @@ Optional: set `LLM_API_KEY` to add one "Why it matters" line per item and let a 
 "Today:" keywords. It calls an
 OpenAI-compatible `/chat/completions` endpoint, by default `https://api.everyinfra.com/api/v1`
 with the model in `llm_model`. `LLM_BASE_URL` and `LLM_MODEL` change the endpoint and model.
-Without `LLM_API_KEY` the digest is the same, just without those lines.
+Without `LLM_API_KEY` the digest is the same, just without those lines. Model calls are billed by
+the provider of that endpoint, separately from the data calls below.
 
 ## Cost
 
@@ -138,7 +162,10 @@ each message body, and sends and saves nothing. Python 3.11 or newer.
   - Discord: at most 10 embeds and 6,000 characters of embed text per message.
   - Slack: at most 50 blocks; a section's text at most 3,000 characters.
   - Telegram: at most 4,096 characters per message.
-  - Feishu: request body at most 20 KB; 100 messages a minute per bot.
+  - Feishu: request body at most 20 KB; 100 messages a minute per bot. In the bot's security
+    settings, use signature verification or none. With "custom keywords", choose a word that is
+    always in the message, such as `EveryInfra`. An IP allowlist does not work, because GitHub's
+    runners have no fixed address.
   - DingTalk: 20 messages a minute per bot. If you use the "custom keywords" security setting,
     choose a word that is always in the message, such as `EveryInfra`.
   - WeCom: markdown content at most 4,096 bytes, so items there have no summary line.
