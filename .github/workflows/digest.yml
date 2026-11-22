@@ -42,6 +42,7 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ secrets.LLM_BASE_URL }}
           LLM_MODEL: ${{ secrets.LLM_MODEL }}
+          SITE_URL: ${{ vars.SITE_URL }}
         run: python -m trend_digest --config digest.toml
 
       - name: Save the web archive and state

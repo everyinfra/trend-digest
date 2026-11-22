@@ -173,6 +173,8 @@ def main(argv=None):
     args = parse_args(sys.argv[1:] if argv is None else argv)
     try:
         config = load_config(args.config)
+        if env("SITE_URL"):  # lets one config file serve several deployments
+            config["site_url"] = env("SITE_URL")
         return run_emit(args, config) if args.emit else run_normal(args, config)
     except (ConfigError, ValueError, OSError) as error:
         log.error("%s", error)

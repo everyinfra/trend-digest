@@ -1,0 +1,241 @@
+{
+ "version": 1,
+ "date": "2026-11-22",
+ "language": "en",
+ "title": "EveryInfra Trend Digest · Sun, Nov 22",
+ "keywords": [
+  "Agent",
+  "skill",
+  "software"
+ ],
+ "sections": [
+  {
+   "id": "github",
+   "label": "GitHub trending",
+   "icon_url": "https://www.google.com/s2/favicons?domain=github.com&sz=64",
+   "items": [
+    {
+     "id": "github:elementalsouls/Claude-BugHunter",
+     "source": "github/trending",
+     "title": "elementalsouls/Claude-BugHunter",
+     "url": "https://github.com/elementalsouls/Claude-BugHunter",
+     "summary": "A Claude Code skill bundle for bug hunting and external red-team work - 82 skills, 15 slash commands, 681 disclosed-report patterns curated across 24 core vulnerability classes, plus enterprise identity + infrastructure…",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 1,
+       "delta": null
+      }
+     ],
+     "metric_text": "#1 on GitHub trending",
+     "why": null,
+     "extra": {
+      "platform": "github",
+      "rank": 1
+     }
+    },
+    {
+     "id": "github:obra/superpowers",
+     "source": "github/trending",
+     "title": "obra/superpowers",
+     "url": "https://github.com/obra/superpowers",
+     "summary": "An agentic skills framework & software development methodology that works.",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 2,
+       "delta": null
+      }
+     ],
+     "metric_text": "#2 on GitHub trending",
+     "why": null,
+     "extra": {
+      "platform": "github",
+      "rank": 2
+     }
+    },
+    {
+     "id": "github:HKUDS/CLI-Anything",
+     "source": "github/trending",
+     "title": "HKUDS/CLI-Anything",
+     "url": "https://github.com/HKUDS/CLI-Anything",
+     "summary": "\"CLI-Anything: Making ALL Software Agent-Native\" -- CLI-Hub: https://clianything.cc/",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 3,
+       "delta": null
+      }
+     ],
+     "metric_text": "#3 on GitHub trending",
+     "why": null,
+     "extra": {
+      "platform": "github",
+      "rank": 3
+     }
+    }
+   ]
+  },
+  {
+   "id": "reddit",
+   "label": "Reddit · r/LocalLLaMA, r/MachineLearning",
+   "icon_url": "https://www.google.com/s2/favicons?domain=reddit.com&sz=64",
+   "items": [
+    {
+     "id": "reddit:1y2gxo7",
+     "source": "reddit/subreddit_posts",
+     "title": "Inkling absolutely rips. ~200 tok/s decode, ~6,700 prefill on 2x3090s",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y2gxo7/inkling_absolutely_rips_200_toks_decode_6700/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 356,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 84,
+       "delta": null
+      }
+     ],
+     "metric_text": "356 upvotes · 84 comments · r/LocalLLaMA",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "Resources"
+     }
+    },
+    {
+     "id": "reddit:1y22kzn",
+     "source": "reddit/subreddit_posts",
+     "title": "Inkling-2-Mini-Unbound is live: the most useful uncensored Inkling 2 Mini, via conv-aware abliteration",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y22kzn/inkling2miniunbound_is_live_the_most_useful/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 343,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 88,
+       "delta": null
+      }
+     ],
+     "metric_text": "343 upvotes · 88 comments · r/LocalLLaMA",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "Resources"
+     }
+    },
+    {
+     "id": "reddit:1y24szp",
+     "source": "reddit/subreddit_posts",
+     "title": "ICLR 2027 Rebuttal Score Ranked by University [N]",
+     "url": "https://www.reddit.com/r/MachineLearning/comments/1y24szp/iclr_2027_rebuttal_score_ranked_by_university_n/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 72,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 14,
+       "delta": null
+      }
+     ],
+     "metric_text": "72 upvotes · 14 comments · r/MachineLearning",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "MachineLearning",
+      "flair": "News"
+     }
+    }
+   ]
+  },
+  {
+   "id": "google_news",
+   "label": "Google News",
+   "icon_url": "https://www.google.com/s2/favicons?domain=news.google.com&sz=64",
+   "items": [
+    {
+     "id": "gnews:31c336541238",
+     "source": "google_news/search",
+     "title": "Banks Have Had It Up to Here With Your AI Agent",
+     "url": "https://www.wired.com/story/banks-are-cracking-down-on-ai-agents/",
+     "summary": "Wells Fargo is set to enact an updated agreement with millions of customers, specifically about AI agents, starting on Tuesday.",
+     "metrics": [],
+     "metric_text": "WIRED · 5h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "WIRED",
+      "published_at": "2026-11-22T11:00:00Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:e1bd1a79143c",
+     "source": "google_news/search",
+     "title": "Apple Risks Losing the AI Agent War With an Outdated Playbook",
+     "url": "https://www.bloomberg.com/news/newsletters/2026-11-22/apple-s-ai-agent-war-early-2027-product-plans-and-iphone-duo-face-unlock-review",
+     "summary": "",
+     "metrics": [],
+     "metric_text": "Bloomberg.com · 1h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Bloomberg.com",
+      "published_at": "2026-11-22T15:00:01Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:c36aedfecf7f",
+     "source": "google_news/search",
+     "title": "Chrome Unprompted: Coffee Pop-up",
+     "url": "https://superpowerdaily.com/events/chrome-unprompted-coffee-pop-up-ce79fecb-ff43-4713-819a-7925082aeaa8",
+     "summary": "Developers, founders, designers, students, and AI-curious makers will connect over coffee and conversations about building with AI. From the ...",
+     "metrics": [],
+     "metric_text": "Superpower Daily · 55m ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Superpower Daily",
+      "published_at": "2026-11-22T15:31:12Z",
+      "keyword": "developer tools"
+     }
+    }
+   ]
+  }
+ ],
+ "weekly": null,
+ "usage": {
+  "calls": 6,
+  "charged_usd": 0.003502,
+  "failed": [
+   {
+    "source": "producthunt/trending",
+    "reason": "empty"
+   }
+  ]
+ },
+ "index_entry": {
+  "date": "2026-11-22",
+  "title": "EveryInfra Trend Digest · Sun, Nov 22",
+  "keywords": [
+   "Agent",
+   "skill",
+   "software"
+  ],
+  "count": 9
+ }
+}

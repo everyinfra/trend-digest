@@ -61,7 +61,8 @@ section, for example `Reddit · r/LocalLLaMA, r/MachineLearning`.
 it costs more). Use it with `--config presets/zh.toml` in `.github/workflows/digest.yml`.
 
 An item shown in the last 7 days is not shown again. On Mondays (in your `timezone`) the digest adds
-a weekly list: the repos that gained the most stars and the posts with the most comments.
+a weekly list: the repos that gained the most stars (or, when the data has no star counts, the
+repos that stayed on GitHub trending for the most days) and the posts with the most comments.
 
 To change the time, edit the `cron` line in `.github/workflows/digest.yml`. Cron times are UTC.
 
@@ -113,7 +114,8 @@ Each run writes `docs/archive/YYYY-MM-DD.html`, `docs/data/YYYY-MM-DD.json` and 
 1. Open **Settings > Pages**.
 2. Under **Build and deployment**, choose **Deploy from a branch**, branch `main`, folder `/docs`, and save.
 3. Put the address GitHub shows (for example `https://you.github.io/trend-digest/`) into `site_url`
-   in `digest.toml`. The messages then get a **Web archive** button.
+   in `digest.toml`, or set it as the repository variable `SITE_URL`. The messages then get a
+   **Web archive** button.
 
 ## Try it locally
 

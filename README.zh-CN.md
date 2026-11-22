@@ -48,7 +48,7 @@ limit = 4
 
 小红书热榜默认不开：每千次 $5.56，是其他来源的十倍左右。需要的话在 `presets/zh.toml` 里去掉那几行的注释。
 
-最近 7 天出现过的条目不会重复出现。每周一（按 `timezone`）会多一份周榜：一周涨星最多的仓库和评论最多的帖子。
+最近 7 天出现过的条目不会重复出现。每周一（按 `timezone`）会多一份周榜：一周涨星最多的仓库（数据里没有星数时，改按上榜天数排）和评论最多的帖子。
 
 运行时间在 `.github/workflows/digest.yml` 的 `cron` 一行改，cron 用的是 UTC 时间。
 
@@ -93,7 +93,7 @@ limit = 4
 
 1. 打开 **Settings > Pages**。
 2. **Build and deployment** 选 **Deploy from a branch**，分支 `main`，目录 `/docs`，保存。
-3. 把 GitHub 给出的地址（比如 `https://you.github.io/trend-digest/`）填进 `digest.toml` 的 `site_url`，消息里就会多一个「网页存档」按钮。
+3. 把 GitHub 给出的地址（比如 `https://you.github.io/trend-digest/`）填进 `digest.toml` 的 `site_url`（或者设成仓库变量 `SITE_URL`），消息里就会多一个「网页存档」按钮。
 
 ## 本地试跑
 
