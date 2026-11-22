@@ -1,0 +1,240 @@
+{
+  "name": "New subreddit posts to Discord (EveryInfra)",
+  "nodes": [
+    {
+      "id": "9ff0980d-2eb4-5ba0-80cc-c4050c11eb3b",
+      "name": "Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        -120
+      ],
+      "parameters": {
+        "content": "## New subreddit posts to Discord\n\n### How it works\n1. Runs every 15 minutes.\n2. Calls EveryInfra `reddit/subreddit_posts` with `sort: newest` (one call per run).\n3. Remembers post ids in workflow static data. The first run only records them.\n4. Later runs post only new posts, in one Discord message (up to 10).\n\nCost: 96 calls a day x 30 days x $0.56 per 1,000 calls, about $1.61 a month. Use a longer interval to pay less.\n\n### Setup\n1. Get an EveryInfra API key at https://everyinfra.com/?utm_source=n8n-template\n2. Create a credential of type **Header Auth**: Name `Authorization`, Value `Bearer YOUR_KEY`. Select it in the EveryInfra HTTP Request node.\n3. In Discord: Channel settings > Integrations > Webhooks > New Webhook > Copy Webhook URL.\n4. Paste that URL into the **Settings** node (`discord_webhook_url`).\n5. Set `subreddit` in **Settings**, then **activate** the workflow. Static data is only saved for active runs, not for manual test runs.",
+        "height": 700,
+        "width": 400
+      }
+    },
+    {
+      "id": "5ed50153-1697-5c00-aeef-0dc84b13a9b0",
+      "name": "Note: schedule and settings",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        -120
+      ],
+      "parameters": {
+        "content": "### 1. When and which subreddit\nChange the interval in **Every 15 minutes**. Set the subreddit and your webhook URL in **Settings**.",
+        "height": 420,
+        "width": 420,
+        "color": 7
+      }
+    },
+    {
+      "id": "06d12676-2b33-5de6-8086-007a6fc22803",
+      "name": "Note: fetch",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        -120
+      ],
+      "parameters": {
+        "content": "### 2. Get the newest posts\nOne POST to `/api/v1/social` with `platform: reddit`, `action: subreddit_posts`.",
+        "height": 420,
+        "width": 220,
+        "color": 7
+      }
+    },
+    {
+      "id": "d54a9dd9-9298-5074-90da-c22c86dc44cd",
+      "name": "Note: send",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -120
+      ],
+      "parameters": {
+        "content": "### 3. Keep new posts and send\nThe Code node compares ids with the ones it remembered and builds one message. Nothing new means nothing is sent.",
+        "height": 420,
+        "width": 440,
+        "color": 7
+      }
+    },
+    {
+      "id": "96f56e32-95a9-550b-b2fe-2862b2fb2443",
+      "name": "Every 15 minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        20,
+        100
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "01ca79c4-4543-593a-bc86-ed9149765b43",
+      "name": "Settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        100
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "822e2dc9-823f-54b7-8ef0-720d8dbd0f46",
+              "name": "subreddit",
+              "type": "string",
+              "value": "LocalLLaMA"
+            },
+            {
+              "id": "660b705e-58ff-5422-a95b-1d3b561b68f3",
+              "name": "discord_webhook_url",
+              "type": "string",
+              "value": "PASTE_YOUR_DISCORD_WEBHOOK_URL_HERE"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "bd89bca1-28c3-542d-a63f-7f35b594d5f4",
+      "name": "Get newest posts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        100
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.everyinfra.com/api/v1/social",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "trend-digest-n8n/0.1"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ platform: \"reddit\", action: \"subreddit_posts\", params: { subreddit: $json.subreddit, sort: \"newest\" } }) }}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "credential-id",
+          "name": "EveryInfra API key"
+        }
+      }
+    },
+    {
+      "id": "67ab0683-192a-5154-9833-2a9340c850ab",
+      "name": "Keep only new posts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        100
+      ],
+      "parameters": {
+        "jsCode": "// Remember which posts were already seen (workflow static data) and keep only new ones.\n// Static data is saved only when the workflow runs from its trigger (active),\n// not when you click \"Execute workflow\" in the editor.\nconst memory = $getWorkflowStaticData('global');\nconst settings = $('Settings').first().json;\nconst posts = ($input.first().json.results || []).filter(post => post.id);\n\nconst firstRun = !Array.isArray(memory.seenIds);\nconst seen = new Set(memory.seenIds || []);\nconst fresh = posts.filter(post => !seen.has(post.id));\n\n// Keep the newest 500 ids so the memory stays small.\nmemory.seenIds = [...posts.map(post => post.id), ...(memory.seenIds || [])]\n  .filter((id, i, all) => all.indexOf(id) === i)\n  .slice(0, 500);\n\nif (firstRun || fresh.length === 0) {\n  return []; // first run only records ids; later runs send only new posts\n}\n\n// One message for all new posts. Discord allows at most 10 embeds per message.\nconst embeds = fresh.slice(0, 10).map(post => ({\n  title: (post.title || '').slice(0, 256),\n  url: post.url,\n  color: 0x0ACAB5,\n  description: `${post.like_count ?? 0} upvotes · ${post.comment_count ?? 0} comments`,\n}));\n\nconst payload = {\n  content: `New in r/${settings.subreddit}`.slice(0, 2000),\n  embeds,\n  allowed_mentions: { parse: [] },\n};\nreturn [{ json: { payload } }];\n"
+      }
+    },
+    {
+      "id": "9b9f34b2-520a-54f5-b79a-48689ce8ca83",
+      "name": "Send to Discord",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        920,
+        100
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Settings').first().json.discord_webhook_url }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Every 15 minutes": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "node": "Get newest posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get newest posts": {
+      "main": [
+        [
+          {
+            "node": "Keep only new posts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keep only new posts": {
+      "main": [
+        [
+          {
+            "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}

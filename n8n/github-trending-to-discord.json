@@ -1,0 +1,240 @@
+{
+  "name": "GitHub trending to Discord (EveryInfra)",
+  "nodes": [
+    {
+      "id": "9ff0980d-2eb4-5ba0-80cc-c4050c11eb3b",
+      "name": "Overview",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        -120
+      ],
+      "parameters": {
+        "content": "## GitHub trending to Discord\n\n### How it works\n1. Runs every day at 13:00 UTC.\n2. Calls EveryInfra `github/trending` (one call per run).\n3. Takes the top 5 repositories and builds one Discord embed.\n4. Posts it to your channel through a Discord webhook.\n\nCost: 30 calls a month at $0.81 per 1,000 calls, about $0.02 a month. Calls that return no data are not charged.\n\n### Setup\n1. Get an EveryInfra API key at https://everyinfra.com/?utm_source=n8n-template\n2. Create a credential of type **Header Auth**: Name `Authorization`, Value `Bearer YOUR_KEY`. Select it in the EveryInfra HTTP Request node.\n3. In Discord: Channel settings > Integrations > Webhooks > New Webhook > Copy Webhook URL.\n4. Paste that URL into the **Settings** node (`discord_webhook_url`).\n",
+        "height": 620,
+        "width": 400
+      }
+    },
+    {
+      "id": "5ed50153-1697-5c00-aeef-0dc84b13a9b0",
+      "name": "Note: schedule and settings",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -20,
+        -120
+      ],
+      "parameters": {
+        "content": "### 1. When and where\nChange the time in **Every day**. Put your webhook URL and how many repos to show in **Settings**.",
+        "height": 420,
+        "width": 420,
+        "color": 7
+      }
+    },
+    {
+      "id": "06d12676-2b33-5de6-8086-007a6fc22803",
+      "name": "Note: fetch",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        -120
+      ],
+      "parameters": {
+        "content": "### 2. Get the list\nOne POST to `/api/v1/social` with `platform: github`, `action: trending`.",
+        "height": 420,
+        "width": 220,
+        "color": 7
+      }
+    },
+    {
+      "id": "d54a9dd9-9298-5074-90da-c22c86dc44cd",
+      "name": "Note: send",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -120
+      ],
+      "parameters": {
+        "content": "### 3. Build and send\nThe Code node builds the embed. The last node posts it to Discord.",
+        "height": 420,
+        "width": 440,
+        "color": 7
+      }
+    },
+    {
+      "id": "c41e152e-4fd8-5535-b927-04cf87f0bd9b",
+      "name": "Every day",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        20,
+        100
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 13 * * *"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "01ca79c4-4543-593a-bc86-ed9149765b43",
+      "name": "Settings",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        100
+      ],
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "660b705e-58ff-5422-a95b-1d3b561b68f3",
+              "name": "discord_webhook_url",
+              "type": "string",
+              "value": "PASTE_YOUR_DISCORD_WEBHOOK_URL_HERE"
+            },
+            {
+              "id": "4e21a1d5-500e-53ff-bb04-0bb2b20d253c",
+              "name": "top_n",
+              "type": "number",
+              "value": 5
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "5b57f140-b084-57d4-a387-5bb7727d2e6c",
+      "name": "Get GitHub trending",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        460,
+        100
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.everyinfra.com/api/v1/social",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "trend-digest-n8n/0.1"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"platform\": \"github\",\n  \"action\": \"trending\",\n  \"params\": {}\n}",
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "credential-id",
+          "name": "EveryInfra API key"
+        }
+      }
+    },
+    {
+      "id": "1eb52559-10aa-547e-adae-e43b11b82a7c",
+      "name": "Build Discord message",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        700,
+        100
+      ],
+      "parameters": {
+        "jsCode": "// Turn the API response into one Discord message with one embed.\nconst settings = $('Settings').first().json;\nconst repos = ($input.first().json.results || []).slice(0, Number(settings.top_n) || 5);\nif (repos.length === 0) {\n  return []; // nothing came back today; send nothing\n}\n\nconst lines = repos.map((repo, i) => {\n  const about = (repo.description || '').slice(0, 180);\n  const stars = repo.stars_today ? ` · +${repo.stars_today} stars today` : '';\n  return `**${i + 1}. [${repo.full_name}](${repo.url})**${stars}\\n${about}`;\n});\n\nconst payload = {\n  embeds: [{\n    title: 'GitHub trending today',\n    url: 'https://github.com/trending',\n    color: 0x0ACAB5,\n    description: lines.join('\\n\\n').slice(0, 4000),\n    footer: { text: 'Data via EveryInfra' },\n  }],\n  allowed_mentions: { parse: [] },\n};\nreturn [{ json: { payload } }];\n"
+      }
+    },
+    {
+      "id": "9b9f34b2-520a-54f5-b79a-48689ce8ca83",
+      "name": "Send to Discord",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        920,
+        100
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Settings').first().json.discord_webhook_url }}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.payload) }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Every day": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "node": "Get GitHub trending",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get GitHub trending": {
+      "main": [
+        [
+          {
+            "node": "Build Discord message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Discord message": {
+      "main": [
+        [
+          {
+            "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": []
+}
