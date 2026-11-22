@@ -6,7 +6,7 @@ Only fields both endpoints accept are used: `embeds`, `components`,
 - Embed 1 holds the title and the keyword line.
 - Then one embed per section: author.name = section name, author.icon_url = its
   icon, and the items in the description:
-      **1. [title](link)** · ★ 12,480 (+1,240 today)
+      1\\. **[title](link)** · ★ 12,480 (+1,240 today)
       summary
       *Why it matters:* ...
 - The last embed has the footer, and its description ends with text links, so
@@ -42,8 +42,21 @@ def link_target(url):
     return url.replace("(", "%28").replace(")", "%29").replace(" ", "%20")
 
 
+def link_text(text):
+    """Text for the inside of a masked link `[text](url)`.
+
+    Discord shows backslash escapes literally inside link text, so nothing is
+    escaped here. Square brackets would end the link early and `*` would break
+    the bold around it, so they are swapped for look-alikes.
+    """
+    text = " ".join((text or "").split())
+    return text.replace("[", "(").replace("]", ")").replace("*", "∗")
+
+
 def item_block(number, item, why):
-    head = f"**{number}. [{escape(item['title'])}]({link_target(item['url'])})**"
+    # "1\." and not "1.": a line that starts with "1. " becomes a list, and the
+    # rest of the line (the metric) then drops to the next line.
+    head = f"{number}\\. **[{link_text(item['title'])}]({link_target(item['url'])})**"
     if item.get("metric_text"):
         head += f" · {escape(item['metric_text'])}"
     lines = [head]

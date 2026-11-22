@@ -53,6 +53,15 @@ class DiscordTest(unittest.TestCase):
         self.assertEqual([b["style"] for b in buttons], [5])
         self.assertEqual(self.body["embeds"][1]["author"]["name"], "GitHub trending")
 
+    def test_item_line_as_discord_shows_it(self):
+        # Seen in a real channel on 2026-11-23: "**1. [title](url)** · metric" turned
+        # into a list and pushed the metric to the next line, and "\\~" and "\\[N\\]"
+        # inside link text showed with their backslashes.
+        item = {"title": "Score ranked by university [N], ~6,700 rows", "url": "https://example.com/a",
+                "metric_text": "72 upvotes"}
+        line = discord.item_block(1, item, "Why it matters")
+        self.assertEqual(line, "1\\. **[Score ranked by university (N), ~6,700 rows](https://example.com/a)** · 72 upvotes")
+
     def test_too_long_input_loses_items_until_it_fits(self):
         message = long_message()
         body = discord.render(message)
