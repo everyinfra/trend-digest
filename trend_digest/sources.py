@@ -256,6 +256,12 @@ def has_number(item):
     return any(m["label"] != "rank" and m["value"] is not None for m in item["metrics"])
 
 
+def rank_part(item, lang):
+    """['#3 on the list'], or [] when the source gave no position."""
+    rank = value_of(item, "rank")
+    return [t(lang, "rank", n=rank["value"])] if rank and rank["value"] is not None else []
+
+
 def with_delta(text, m, lang):
     if m and m.get("delta"):
         return f"{text} ({t(lang, 'delta_today', n=full_number(m['delta']))})"
@@ -269,9 +275,8 @@ def github_text(item, lang, now):
     elif today:
         text = "★ " + t(lang, "delta_today", n=full_number(today["value"]))
     else:
-        text = t(lang, "github_rank", n=item["extra"].get("rank") or "?")
-    language = item["extra"].get("language")
-    return f"{text} · {language}" if language else text
+        text = t(lang, "github_rank", n=item["extra"]["rank"]) if item["extra"].get("rank") else ""
+    return " · ".join(part for part in (text, item["extra"].get("language")) if part)
 
 
 def producthunt_text(item, lang, now):
@@ -282,8 +287,7 @@ def producthunt_text(item, lang, now):
     if comments:
         parts.append(t(lang, "comments", n=short_number(comments["value"], lang)))
     if not parts:
-        rank = value_of(item, "rank")
-        parts.append(t(lang, "rank", n=rank["value"] if rank else "?"))
+        parts += rank_part(item, lang)
     return " · ".join(parts)
 
 
@@ -304,7 +308,9 @@ def twitter_text(item, lang, now):
     volume = value_of(item, "volume")
     if volume:
         return t(lang, "x_volume", n=volume["value"])
-    return t(lang, "x_rank", n=item["extra"].get("rank") or "?", country=item["extra"]["country"])
+    if not item["extra"].get("rank"):
+        return ""
+    return t(lang, "x_rank", n=item["extra"]["rank"], country=item["extra"]["country"])
 
 
 def google_news_text(item, lang, now):
@@ -321,8 +327,7 @@ def heat_text(item, lang, now):
     if videos:
         parts.append(t(lang, "videos", n=full_number(videos["value"])))
     if not parts:
-        rank = value_of(item, "rank")
-        parts.append(t(lang, "rank", n=rank["value"] if rank else "?"))
+        parts += rank_part(item, lang)
     return " · ".join(parts)
 
 

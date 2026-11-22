@@ -32,13 +32,16 @@ The 7-day memory is in `state/state.json`, which the first run creates.
 ## Change what it collects
 
 Everything is in `digest.toml`. Each `[[sources]]` entry is one API call per run, and `limit` is
-how many items it may add. The digest never holds more than `max_items` (12 by default).
+how many items it may add. The digest never holds more than `max_items` (12 by default). When a
+source comes back empty or short, the other sources may each add up to 2 more items until the
+digest holds `min_items` (10 by default); set `min_items = 1` to turn this off.
 
 ```toml
 language = "en"          # "en" or "zh"
-timezone = "UTC"
+timezone = "America/New_York"
 title = "EveryInfra Trend Digest"
 max_items = 12
+min_items = 10
 
 [[sources]]
 use = "github/trending"
@@ -139,7 +142,7 @@ Each run writes `docs/archive/YYYY-MM-DD.html`, `docs/data/YYYY-MM-DD.json` and 
 2. Under **Build and deployment**, choose **Deploy from a branch**, branch `main`, folder `/docs`, and save.
 3. Put the address GitHub shows (for example `https://you.github.io/trend-digest/`) into `site_url`
    in `digest.toml`, or set it as the repository variable `SITE_URL`. The messages then get a
-   **Web archive** button.
+   **Web archive** link. Platforms that have buttons show it as a button.
 
 ## Try it locally
 
@@ -170,7 +173,8 @@ each message body, and sends and saves nothing. Python 3.11 or newer.
     choose a word that is always in the message, such as `EveryInfra`.
   - WeCom: markdown content at most 4,096 bytes, so items there have no summary line.
 - Nobody is pinged. Discord messages are sent with `allowed_mentions` turned off.
-- The date in the title follows `timezone`. The run time follows the cron line, which is UTC.
+- The date in the title follows `timezone` (default `America/New_York`). The run time follows the
+  cron line, which is UTC.
 - If one channel fails, the others still get the digest; the run is marked failed so you notice.
 
 ## Use it as a library

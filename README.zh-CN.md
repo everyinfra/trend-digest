@@ -22,7 +22,7 @@
 
 ## 改抓什么
 
-只需要改 `digest.toml`。每个 `[[sources]]` 是每次运行的一次接口调用，`limit` 是这一项最多放几条，整份简报最多 `max_items` 条（默认 12）。
+只需要改 `digest.toml`。每个 `[[sources]]` 是每次运行的一次接口调用，`limit` 是这一项最多放几条，整份简报最多 `max_items` 条（默认 12）。某个来源当天没数据或不够数时，其他来源各自最多多放 2 条，把整份补到 `min_items` 条（默认 10）；不想补就写 `min_items = 1`。
 
 ```toml
 language = "zh"
@@ -116,7 +116,7 @@ limit = 2
 
 1. 打开 **Settings > Pages**。
 2. **Build and deployment** 选 **Deploy from a branch**，分支 `main`，目录 `/docs`，保存。
-3. 把 GitHub 给出的地址（比如 `https://you.github.io/trend-digest/`）填进 `digest.toml` 的 `site_url`（或者设成仓库变量 `SITE_URL`），消息里就会多一个「网页存档」按钮。
+3. 把 GitHub 给出的地址（比如 `https://you.github.io/trend-digest/`）填进 `digest.toml` 的 `site_url`（或者设成仓库变量 `SITE_URL`），消息里就会多一个「网页存档」链接，支持按钮的平台显示成按钮。
 
 ## 本地试跑
 
@@ -137,7 +137,7 @@ python -m trend_digest --dry-run --config presets/zh.toml
   - 企业微信：markdown 内容不超过 4096 字节，所以这里每条不带摘要。
   - Telegram：每条消息不超过 4096 个字符。Slack：最多 50 个 block。Discord：每条最多 10 个 embed、embed 文字合计 6000 字符。
 - 不会 @ 任何人。
-- 标题里的日期按 `timezone` 算，运行时间按 cron（UTC）算。
+- 标题里的日期按 `timezone` 算（不写时默认 `America/New_York`，中文预设是 `Asia/Shanghai`），运行时间按 cron（UTC）算。
 - 某个渠道发送失败不影响其他渠道，但这次运行会标成失败，方便你发现。
 
 ## 当作库来用

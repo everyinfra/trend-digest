@@ -5,8 +5,10 @@ Rules (from the digest spec):
 - items sent in the last 7 days are skipped, and so are repeats within one run;
 - inside a source, items that show a count come before items that only show a rank;
 - sources of the same platform share one section (two subreddits = one Reddit section);
-- the whole digest holds at most `max_items` items; an empty section is left out and
-  the other sections do not grow to fill its place.
+- when a source comes back empty or short, the other sources may each add up to
+  EXTRA_PER_SOURCE more items, one per source per round in config order, until the
+  digest holds `min_items` (or as many as the limits add up to, if that is less);
+- the whole digest holds at most `max_items` items; an empty section is left out.
 """
 
 from .i18n import t
@@ -25,21 +27,50 @@ def add_deltas(items, yesterday):
                 m["delta"] = m["value"] - old[label]
 
 
-def pick_from_source(items, limit, skip_ids):
-    """Up to `limit` new items, items with a count first, original order kept."""
-    fresh = [item for item in items if item["id"] not in skip_ids]
+EXTRA_PER_SOURCE = 2
+
+
+def fresh_items(items, skip_ids):
+    """New items only, items with a count first, original order kept."""
+    seen, fresh = set(skip_ids), []
+    for item in items:
+        if item["id"] not in seen:
+            seen.add(item["id"])
+            fresh.append(item)
     fresh.sort(key=lambda item: not has_number(item))
-    return fresh[:limit]
+    return fresh
 
 
-def pick_items(fetched, skip_ids):
+def fill_up(picks, spare, taken, goal):
+    """Add spare items, one per source per round in config order, until `goal` items."""
+    total = sum(len(chosen) for _, chosen in picks)
+    added = True
+    while total < goal and added:
+        added = False
+        for (_, chosen), more in zip(picks, spare):
+            while more and total < goal:
+                item = more.pop(0)
+                if item["id"] in taken:
+                    continue
+                chosen.append(item)
+                taken.add(item["id"])
+                total += 1
+                added = True
+                break
+
+
+def pick_items(fetched, skip_ids, min_items=0):
     """`fetched` = [(source_config, items)]. Returns [(source_config, picked)]."""
     taken = set(skip_ids)
-    picks = []
+    picks, spare = [], []
     for source, items in fetched:
-        chosen = pick_from_source(items, source["limit"], taken)
+        fresh = fresh_items(items, taken)
+        limit = source["limit"]
+        chosen = fresh[:limit]
         taken.update(item["id"] for item in chosen)
         picks.append((source, chosen))
+        spare.append(fresh[limit:limit + EXTRA_PER_SOURCE])
+    fill_up(picks, spare, taken, min(min_items, sum(source["limit"] for source, _ in fetched)))
     return picks
 
 

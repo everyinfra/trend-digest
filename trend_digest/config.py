@@ -20,7 +20,7 @@ except ImportError:  # Python 3.10
 
 DEFAULTS = {
     "language": "en",
-    "timezone": "UTC",
+    "timezone": "America/New_York",
     "title": "EveryInfra Trend Digest",
     "site_url": "",
     "max_items": 12,

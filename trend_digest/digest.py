@@ -76,7 +76,7 @@ def daily_sections(config, fetched, state, today, local, exclude_ids):
     every_item = [item for _, items in fetched for item in items]
     add_deltas(every_item, previous_snapshot(state, today))
     record_snapshot(state, today, every_item)
-    picks = pick_items(fetched, seen_ids(state, today) | set(exclude_ids or ()))
+    picks = pick_items(fetched, seen_ids(state, today) | set(exclude_ids or ()), config["min_items"])
     sections = cap_total(group_sections(picks, config["language"]), config["max_items"])
     for item in all_items(sections):
         describe(item, config["language"], local)
@@ -141,7 +141,7 @@ def build_digest(config, api_key=None, state=None, now=None, llm=None, fetch=Non
         digest["sections"] = daily_sections(config, fetched, state, today, local, exclude_ids)
         items = all_items(digest["sections"])
         digest["keywords"] = pick_keywords(items, llm, config["language"])
-        add_why(items, llm)
+        add_why(items, llm, config["language"])
         mark_seen(state, items, today)
         messages.append(daily_message(config, digest))
     if wants_weekly(kind, local):

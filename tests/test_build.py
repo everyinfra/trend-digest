@@ -19,10 +19,20 @@ class DefaultConfigTest(unittest.TestCase):
         self.digest = build_digest(default_config_path(), fetch=fixture_fetch(calls=self.calls),
                                    now=at("2026-11-24"))
 
-    def test_at_most_twelve_items_and_section_limits(self):
+    def test_ten_to_twelve_items_when_product_hunt_is_empty(self):
+        # The saved Product Hunt answer is empty, as it was on the first live run (9 items then).
+        # The other sources fill the gap: each [[sources]] entry may add at most 2 over its limit.
+        self.assertGreaterEqual(len(items_of(self.digest)), 10)
         self.assertLessEqual(len(items_of(self.digest)), 12)
-        limits = {"github": 3, "producthunt": 3, "reddit": 3, "google_news": 3}
+        limits = {"github": 3 + 2, "reddit": (2 + 2) + (1 + 2), "google_news": (2 + 2) + (1 + 2)}
         for section in self.digest["sections"]:
+            self.assertLessEqual(len(section["items"]), limits[section["id"]], section["id"])
+
+    def test_no_fill_up_when_min_items_is_one(self):
+        config = {**load_config(default_config_path()), "min_items": 1}
+        digest = build_digest(config, fetch=fixture_fetch(), now=at("2026-11-24"))
+        limits = {"github": 3, "reddit": 3, "google_news": 3}
+        for section in digest["sections"]:
             self.assertLessEqual(len(section["items"]), limits[section["id"]], section["id"])
 
     def test_every_item_has_a_link_and_a_prefixed_id(self):
