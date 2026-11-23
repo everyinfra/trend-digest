@@ -16,7 +16,8 @@ EMIT_KEYS = {"date", "kind", "items", "discord", "telegram", "calls", "cost_usd"
 
 def run_cli(args, fixtures=FIXTURES, extra_env=None):
     env = {k: v for k, v in os.environ.items()
-           if not k.endswith("_WEBHOOK_URL") and not k.startswith(("TELEGRAM_", "LLM_", "EVERYINFRA_"))}
+           if not k.endswith("_WEBHOOK_URL") and not k.startswith(("TELEGRAM_", "LLM_", "EVERYINFRA_"))
+           and k != "GITHUB_REPOSITORY"}
     env["TREND_DIGEST_FIXTURES"] = fixtures
     env.update(extra_env or {})
     return subprocess.run([sys.executable, "-m", "trend_digest", *args], cwd=ROOT, env=env,
@@ -119,6 +120,45 @@ class CliTest(unittest.TestCase):
         result = run_cli(["--dry-run", "--state", self.state], fixtures="")
         self.assertEqual(result.returncode, 1)
         self.assertIn("EVERYINFRA_API_KEY is not set", result.stderr)
+
+
+class TemplateCopyTest(unittest.TestCase):
+    """The template repository commits its demo archive and 7-day memory; copies get those files."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+        self.state = os.path.join(self.tmp, "state.json")
+        self.site = os.path.join(self.tmp, "docs")
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def run_in(self, repository, day):
+        result = run_cli(["--state", self.state, "--site", self.site, "--date", day],
+                         extra_env={"GITHUB_REPOSITORY": repository})
+        self.assertEqual(result.returncode, 0, result.stderr)
+        with open(self.state, encoding="utf-8") as handle:
+            state = json.load(handle)
+        with open(os.path.join(self.site, "data", "index.json"), encoding="utf-8") as handle:
+            index = json.load(handle)
+        return state, index
+
+    def test_a_copy_drops_the_demo_memory_and_archive(self):
+        self.run_in("everyinfra/trend-digest", "2026-11-24")
+        state, index = self.run_in("someone/my-digest", "2026-11-25")
+        self.assertEqual(state["repository"], "someone/my-digest")
+        self.assertEqual(set(state["seen"].values()), {"2026-11-25"})
+        self.assertEqual([(e["date"], e["repository"]) for e in index], [("2026-11-25", "someone/my-digest")])
+        self.assertFalse(os.path.exists(os.path.join(self.site, "archive", "2026-11-24.html")))
+        self.assertFalse(os.path.exists(os.path.join(self.site, "data", "2026-11-24.json")))
+        self.assertTrue(os.path.exists(os.path.join(self.site, "archive", "2026-11-25.html")))
+
+    def test_the_same_repository_keeps_its_memory_and_archive(self):
+        self.run_in("someone/my-digest", "2026-11-24")
+        state, index = self.run_in("someone/my-digest", "2026-11-25")
+        self.assertIn("2026-11-24", set(state["seen"].values()))
+        self.assertEqual([e["date"] for e in index], ["2026-11-25", "2026-11-24"])
+        self.assertTrue(os.path.exists(os.path.join(self.site, "archive", "2026-11-24.html")))
 
 
 if __name__ == "__main__":

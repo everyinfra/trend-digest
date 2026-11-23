@@ -25,9 +25,9 @@ Demo archive: https://everyinfra.github.io/trend-digest/
 3. Open **Actions > Trend digest > Run workflow**. The digest arrives in a minute or two.
    After that it runs every day at 13:00 UTC.
 
-The `docs/` folder of this template holds the archive of our own channel. For a clean start in
-your copy, delete `docs/archive/` and `docs/data/` (keep `docs/assets/` and `docs/index.html`).
-The 7-day memory is in `state/state.json`, which the first run creates.
+The `docs/` folder and `state/state.json` of this template hold the archive and the 7-day memory
+of our demo. The first run in your copy deletes the demo's archive days and starts with an empty
+memory, so you do not have to delete anything.
 
 ## Change what it collects
 

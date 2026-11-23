@@ -21,6 +21,7 @@ import sys
 from datetime import datetime, time, timezone
 from zoneinfo import ZoneInfo
 
+from . import origin
 from .client import fixture_fetcher
 from .config import ConfigError, load_config
 from .digest import NotEnoughHistory, build_digest
@@ -28,7 +29,7 @@ from .emit import emit_document, why_empty, write_document
 from .render.text import render as render_text
 from .send import send
 from .site import write_site
-from .state import load_state, save_state
+from .state import empty_state, load_state, save_state
 from .why import llm_from_env
 
 log = logging.getLogger("trend_digest")
@@ -90,6 +91,21 @@ def read_seen(path):
     return [str(x) for x in data]
 
 
+def load_own_state(path):
+    """The state file, or an empty state when the file is the template demo's memory (see origin.py)."""
+    state = load_state(path)
+    if origin.from_demo(state.get("repository")):
+        log.info("This repository is a copy of the template: starting with an empty 7-day memory.")
+        return empty_state()
+    return state
+
+
+def save_own_state(path, state):
+    if origin.current():
+        state["repository"] = origin.current()
+    save_state(path, state)
+
+
 def build(args, config, kind, exclude_ids=()):
     fixtures = env("TREND_DIGEST_FIXTURES")
     fetch = fixture_fetcher(fixtures) if fixtures else None
@@ -98,7 +114,7 @@ def build(args, config, kind, exclude_ids=()):
         raise ConfigError("EVERYINFRA_API_KEY is not set. Add it as a repository secret "
                           "(Settings > Secrets and variables > Actions). "
                           "Get a key at https://everyinfra.com/?utm_source=github-template")
-    return build_digest(config, api_key=api_key, state=load_state(args.state),
+    return build_digest(config, api_key=api_key, state=load_own_state(args.state),
                         now=run_time(args.date, config), llm=llm_from_env(config),
                         fetch=fetch, kind=kind, exclude_ids=exclude_ids)
 
@@ -140,7 +156,7 @@ def run_emit(args, config):
         log.error("No output written: %s", problem)
         return 1
     write_document(emit_document(digest, args.kind, args.date), args.emit)
-    save_state(args.state, digest["state"])
+    save_own_state(args.state, digest["state"])
     return 0
 
 
@@ -160,7 +176,7 @@ def run_normal(args, config):
     if not targets:
         log.warning("No channel is set up (for example DISCORD_WEBHOOK_URL), so nothing was sent.")
     results = send(digest, targets)
-    save_state(args.state, digest["state"])
+    save_own_state(args.state, digest["state"])
     failed = [r for r in results if not r["ok"]]
     for result in failed:
         log.error("%s: not sent: %s", result["channel"], result["error"])

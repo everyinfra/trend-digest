@@ -18,7 +18,7 @@
 3. 想要中文简报（微博热搜、抖音热榜、GitHub 趋势），先把 `presets/zh.toml` 的内容复制到 `digest.toml` 里覆盖并提交。不改的话是英文简报（GitHub、Product Hunt、Reddit、新闻）。
 4. 打开 **Actions > Trend digest > Run workflow** 手动跑一次，一两分钟后群里就能收到。之后每天 UTC 13:00（北京时间 21:00）自动跑。
 
-模板仓库的 `docs/` 里是我们自己频道的存档。想从空白开始，删掉 `docs/archive/` 和 `docs/data/`，保留 `docs/assets/` 和 `docs/index.html`。7 天去重的记录在 `state/state.json`，第一次运行时自动生成。
+模板仓库的 `docs/` 和 `state/state.json` 里是我们演示用的存档和 7 天去重记录。你的仓第一次运行时会删掉演示的存档页、从空记录开始，不用手动删。
 
 ## 改抓什么
 

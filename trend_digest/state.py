@@ -1,12 +1,14 @@
 """What the digest remembers between runs, kept in one small JSON file.
 
     {"version": 1,
+     "repository": "owner/name",                          # where it was written (GitHub Actions)
      "seen": {"github:owner/repo": "2026-11-23", ...},   # first day each item was sent
      "snapshots": {"2026-11-23": {"github:owner/repo": {...}, ...}, ...}}
 
 `seen` stops the same item from being sent again within 7 days.
 `snapshots` keeps each day's numbers for every fetched item (not only the ones
 sent), so tomorrow can show "+N today" and Monday can build the weekly list.
+`repository` lets a copy of the template tell the demo's memory from its own.
 """
 
 import copy
@@ -45,6 +47,8 @@ def normalize_state(data):
     """Return a deep copy with the expected keys, ignoring anything malformed."""
     state = empty_state()
     if isinstance(data, dict):
+        if isinstance(data.get("repository"), str) and data["repository"]:
+            state["repository"] = data["repository"]
         if isinstance(data.get("seen"), dict):
             state["seen"] = copy.deepcopy(data["seen"])
         if isinstance(data.get("snapshots"), dict):
