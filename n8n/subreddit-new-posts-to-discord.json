@@ -7,13 +7,13 @@
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -460,
+        -540,
         -120
       ],
       "parameters": {
-        "content": "## New subreddit posts to Discord\n\n### How it works\n1. Runs every 15 minutes.\n2. Calls EveryInfra `reddit/subreddit_posts` with `sort: newest` (one call per run).\n3. Remembers post ids in workflow static data. The first run only records them.\n4. Later runs post only new posts, in one Discord message (up to 10).\n\nCost: 96 calls a day x 30 days x $0.56 per 1,000 calls, about $1.61 a month. Use a longer interval to pay less.\n\n### Setup\n1. Get an EveryInfra API key at https://everyinfra.com/?utm_source=n8n-template\n2. Create a credential of type **Header Auth**: Name `Authorization`, Value `Bearer YOUR_KEY`. Select it in the EveryInfra HTTP Request node.\n3. In Discord: Channel settings > Integrations > Webhooks > New Webhook > Copy Webhook URL.\n4. Paste that URL into the **Settings** node (`discord_webhook_url`).\n5. Set `subreddit` in **Settings**, then **activate** the workflow. Static data is only saved for active runs, not for manual test runs.",
-        "height": 700,
-        "width": 400
+        "content": "## New subreddit posts to Discord\n\n### How it works\nFor community managers and builders who want new posts from one subreddit in a Discord channel. Every 15 minutes the workflow reads the 10 newest posts with the EveryInfra `reddit/subreddit_posts` endpoint. It compares their ids with the ids saved in workflow static data and posts only the new ones, as one Discord message with title, link, upvotes and comments.\n\nThe first run after you publish only saves the current ids, so the channel does not get old posts. Ids are saved after Discord accepts the message, so if the send fails, the next run sends those posts again.\n\n### Setup\n1. Get an EveryInfra API key at https://everyinfra.com/?utm_source=n8n-template\n2. Create a **Header Auth** credential: Name `Authorization`, Value `Bearer YOUR_KEY`. Select it in **Get newest posts**.\n3. In Discord: Channel settings > Integrations > Webhooks > New Webhook > Copy Webhook URL.\n4. In **Settings**, paste the URL into `discord_webhook_url` and set `subreddit` (without `r/`).\n5. Click **Execute workflow**. This test run posts the 3 newest posts and does not save ids. Then click **Publish**.\n\n### Customization\nChange the interval in **Every 15 minutes**. A run reads only the 10 newest posts, so for a subreddit with more than 10 posts per interval, use a shorter interval. Cost: $0.56 per 1,000 calls, about $1.60 a month at 15 minutes. Calls that return no data are not charged. To post to Slack or another chat, change the message in **Pick new posts** and the URL in **Send to Discord**.",
+        "height": 720,
+        "width": 480
       }
     },
     {
@@ -26,7 +26,7 @@
         -120
       ],
       "parameters": {
-        "content": "### 1. When and which subreddit\nChange the interval in **Every 15 minutes**. Set the subreddit and your webhook URL in **Settings**.",
+        "content": "## When and which subreddit\nSet the interval in **Every 15 minutes**. Set the subreddit and the webhook URL in **Settings**.",
         "height": 420,
         "width": 420,
         "color": 7
@@ -42,7 +42,7 @@
         -120
       ],
       "parameters": {
-        "content": "### 2. Get the newest posts\nOne POST to `/api/v1/social` with `platform: reddit`, `action: subreddit_posts`.",
+        "content": "## Read the newest posts\nOne EveryInfra call per run. If it fails, it is tried up to 3 times.",
         "height": 420,
         "width": 220,
         "color": 7
@@ -50,7 +50,7 @@
     },
     {
       "id": "d54a9dd9-9298-5074-90da-c22c86dc44cd",
-      "name": "Note: send",
+      "name": "Note: pick",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
@@ -58,9 +58,9 @@
         -120
       ],
       "parameters": {
-        "content": "### 3. Keep new posts and send\nThe Code node compares ids with the ones it remembered and builds one message. Nothing new means nothing is sent.",
+        "content": "## Keep only new posts\nThe first published run only saves ids. A test run previews the 3 newest posts. No posts at all (wrong subreddit name) stops the run with an error.",
         "height": 420,
-        "width": 440,
+        "width": 220,
         "color": 7
       }
     },
@@ -148,11 +148,14 @@
           "id": "credential-id",
           "name": "EveryInfra API key"
         }
-      }
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
     },
     {
       "id": "67ab0683-192a-5154-9833-2a9340c850ab",
-      "name": "Keep only new posts",
+      "name": "Pick new posts",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
@@ -160,7 +163,7 @@
         100
       ],
       "parameters": {
-        "jsCode": "// Remember which posts were already seen (workflow static data) and keep only new ones.\n// Static data is saved only when the workflow runs from its trigger (active),\n// not when you click \"Execute workflow\" in the editor.\nconst memory = $getWorkflowStaticData('global');\nconst settings = $('Settings').first().json;\nconst posts = ($input.first().json.results || []).filter(post => post.id);\n\nconst firstRun = !Array.isArray(memory.seenIds);\nconst seen = new Set(memory.seenIds || []);\nconst fresh = posts.filter(post => !seen.has(post.id));\n\n// Keep the newest 500 ids so the memory stays small.\nmemory.seenIds = [...posts.map(post => post.id), ...(memory.seenIds || [])]\n  .filter((id, i, all) => all.indexOf(id) === i)\n  .slice(0, 500);\n\nif (firstRun || fresh.length === 0) {\n  return []; // first run only records ids; later runs send only new posts\n}\n\n// One message for all new posts. Discord allows at most 10 embeds per message.\nconst embeds = fresh.slice(0, 10).map(post => ({\n  title: (post.title || '').slice(0, 256),\n  url: post.url,\n  color: 0x0ACAB5,\n  description: `${post.like_count ?? 0} upvotes · ${post.comment_count ?? 0} comments`,\n}));\n\nconst payload = {\n  content: `New in r/${settings.subreddit}`.slice(0, 2000),\n  embeds,\n  allowed_mentions: { parse: [] },\n};\nreturn [{ json: { payload } }];\n"
+        "jsCode": "// Compare the newest posts with the ids saved in workflow static data.\n// n8n saves static data only for runs of the published workflow, not for test runs in the editor.\nconst memory = $getWorkflowStaticData('global');\nconst subreddit = String($('Settings').first().json.subreddit).replace(/^\\/?r\\//i, '');\n// Keep real posts only. For a subreddit that does not exist, the API returns one status row\n// without a title or link.\nconst posts = ($input.first().json.results || []).filter(post => post.id && post.url && post.title);\nif (posts.length === 0) {\n  throw new Error(`No posts came back for r/${subreddit}. Check the subreddit name in Settings.`);\n}\nconst testRun = $execution.mode === 'test';\n\nlet toSend;\nif (testRun) {\n  toSend = posts.slice(0, 3); // preview only; saved ids stay as they are\n} else if (!Array.isArray(memory.seenIds)) {\n  memory.seenIds = posts.map(post => post.id); // first published run: save ids, send nothing\n  return [];\n} else {\n  const seen = new Set(memory.seenIds);\n  toSend = posts.filter(post => !seen.has(post.id));\n}\nif (toSend.length === 0) {\n  return []; // nothing new: nothing is sent\n}\n\n// One message. Discord allows at most 10 embeds, and one call returns at most 10 posts.\nconst embeds = toSend.slice(0, 10).map(post => ({\n  title: (post.title || '').slice(0, 256),\n  url: post.url,\n  color: 0x0ACAB5,\n  description: `${post.like_count ?? 0} upvotes · ${post.comment_count ?? 0} comments`,\n}));\nconst content = testRun ? `Test run: newest posts in r/${subreddit}` : `New in r/${subreddit}`;\nreturn [{ json: {\n  payload: { content: content.slice(0, 2000), embeds, allowed_mentions: { parse: [] } },\n  ids: testRun ? [] : posts.map(post => post.id), // saved by \"Remember sent posts\"\n} }];\n"
       }
     },
     {
@@ -179,6 +182,38 @@
         "specifyBody": "json",
         "jsonBody": "={{ JSON.stringify($json.payload) }}",
         "options": {}
+      },
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "8c9966ca-d1e2-5c6a-859c-99b5d9fd4afc",
+      "name": "Remember sent posts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        100
+      ],
+      "parameters": {
+        "jsCode": "// Runs only after Discord accepted the message, so a failed send is retried next run.\nconst memory = $getWorkflowStaticData('global');\nconst ids = $('Pick new posts').first().json.ids || [];\n// Keep the newest 500 ids so the memory stays small.\nmemory.seenIds = [...ids, ...(memory.seenIds || [])]\n  .filter((id, i, all) => all.indexOf(id) === i)\n  .slice(0, 500);\nreturn [];\n"
+      }
+    },
+    {
+      "id": "0af799b0-59e1-5a39-bf79-d10ba15a947d",
+      "name": "Note: save",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -120
+      ],
+      "parameters": {
+        "content": "## Send, then save ids\nIds are saved only after Discord accepts the message, so a failed send is sent again next run.",
+        "width": 460,
+        "height": 420,
+        "color": 7
       }
     }
   ],
@@ -209,18 +244,29 @@
       "main": [
         [
           {
-            "node": "Keep only new posts",
+            "node": "Pick new posts",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Keep only new posts": {
+    "Pick new posts": {
       "main": [
         [
           {
             "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to Discord": {
+      "main": [
+        [
+          {
+            "node": "Remember sent posts",
             "type": "main",
             "index": 0
           }
