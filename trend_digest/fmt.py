@@ -3,10 +3,16 @@
 Kept separate so every renderer formats the same number the same way.
 """
 
+import re
 from datetime import datetime, timezone
 from urllib.parse import urlparse
 
 WEEKDAYS_ZH = "一二三四五六日"
+
+# Some publishers' own descriptions glue a year to the next sentence: "scale AI agents by 2028Getting
+# AI agents live". Only a four-digit year that starts a word and is followed by a capitalised word gets
+# a space; names such as 1Password, iPhone or YouTube stay as they are.
+YEAR_GLUED_TO_WORD = re.compile(r"(?<![0-9A-Za-z])((?:19|20)\d\d)(?=[A-Z][a-z]{2,})")
 
 
 def full_number(n):
@@ -91,7 +97,7 @@ def safe_url(url):
 
 def clip(text, limit):
     """Cut text to `limit` characters, adding '…' when it was cut."""
-    text = " ".join(str(text or "").split())
+    text = YEAR_GLUED_TO_WORD.sub(r"\1 ", " ".join(str(text or "").split()))
     if len(text) <= limit:
         return text
     return text[: max(0, limit - 1)].rstrip() + "…"

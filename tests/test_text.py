@@ -3,8 +3,9 @@
 import json
 import unittest
 
+from trend_digest.fmt import clip
 from trend_digest.keywords import pick_keywords
-from trend_digest.sources import describe, producthunt_items
+from trend_digest.sources import describe, google_news_items, producthunt_items
 from trend_digest.why import add_why, llm_from_env
 
 
@@ -35,6 +36,26 @@ class MetricTextTest(unittest.TestCase):
                  "tagline": "your coding agent directs your launch video"}]
         one = describe(producthunt_items(rows, "producthunt/trending", {})[0], "en", None)
         self.assertEqual(one["metric_text"], "")
+
+
+class GluedTextTest(unittest.TestCase):
+    def test_year_glued_to_the_next_sentence_gets_a_space(self):
+        # From a live google_news/search row (keyword "AI agents", 2026-11-23). The publisher's own meta
+        # description reads "...by 2028Getting AI agents live...", and the digest showed it that way.
+        row = {"title": "Gartner Report: Critical Success Measures to Drive Your Customer Service AI Agent Strategy",
+               "url": "https://www.destinationcrm.com/ReportsandResearch/15008-Gartner%C2%AE-Report-Critical-"
+                      "Success-Measures-to-Drive-Your-Customer-Service-AI-Agent-Strategy.htm",
+               "source": "Destination CRM", "published_at": "2026-11-22T15:22:17Z",
+               "text": "50% of customer service orgs will fail to effectively scale AI agents by 2028Getting AI "
+                       "agents live is only the beginning."}
+        one = google_news_items([row], "google_news/search", {"keyword": "AI agents"})[0]
+        self.assertEqual(one["summary"], "50% of customer service orgs will fail to effectively scale AI agents "
+                                         "by 2028 Getting AI agents live is only the beginning.")
+
+    def test_names_with_digits_and_capitals_stay_as_they_are(self):
+        for text in ("1Password adds passkeys", "New iPhone and YouTube features", "Windows2000Server",
+                     "4K video at 2028 prices", "Released in 2028."):
+            self.assertEqual(clip(text, 220), text)
 
 
 class WhyTest(unittest.TestCase):
