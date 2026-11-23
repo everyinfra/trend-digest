@@ -72,14 +72,45 @@ class DiscordTest(unittest.TestCase):
 
 
 class TelegramTest(unittest.TestCase):
-    def test_escaped_and_one_message_under_4096(self):
+    def test_tags_and_link_targets_do_not_count_against_the_limit(self):
+        # Telegram counts the text after it has parsed the tags away, so long link targets that push the
+        # HTML over 4,096 characters still fit in one message, and every item is in it.
+        message = long_message(sections=4, items=3, text="w ")
+        for section in message["sections"]:
+            for item in section["items"]:
+                item["url"] += "?ref=" + "x" * 300
+        bodies = telegram.render(message)
+        self.assertEqual(len(bodies), 1)
+        self.assertGreater(len(bodies[0]["text"]), telegram.MAX_TEXT)
+        self.assertLessEqual(telegram.visible_size(bodies[0]["text"]), telegram.MAX_TEXT)
+        self.assertEqual(sum(bodies[0]["text"].count(f'<a href="{item["url"]}">')
+                             for s in message["sections"] for item in s["items"]), 12)
+
+    def test_a_long_digest_is_split_between_items_and_keeps_every_item(self):
         message = long_message(text="<b>A&B</b> ")
-        body = telegram.render(message)
-        self.assertLessEqual(len(body["text"].encode("utf-16-le")) // 2, 4096)
-        self.assertNotIn("<b>A&B</b>", body["text"])
-        self.assertIn("&lt;b&gt;A&amp;B&lt;/b&gt;", body["text"])
-        self.assertEqual(body["parse_mode"], "HTML")
-        self.assertEqual(len(body["reply_markup"]["inline_keyboard"][0]), 2)
+        bodies = telegram.render(message)
+        self.assertGreater(len(bodies), 1)
+        for body in bodies:
+            self.assertLessEqual(telegram.visible_size(body["text"]), telegram.MAX_TEXT)
+            self.assertEqual(body["parse_mode"], "HTML")
+            self.assertNotIn("<b>A&B</b>", body["text"])
+        self.assertIn("&lt;b&gt;A&amp;B&lt;/b&gt;", bodies[0]["text"])
+        text = "\n".join(body["text"] for body in bodies)
+        for section in message["sections"]:
+            for item in section["items"]:
+                self.assertEqual(text.count(f'<a href="{item["url"]}">'), 1, item["url"])
+        self.assertEqual(["reply_markup" in body for body in bodies], [False] * (len(bodies) - 1) + [True])
+        self.assertEqual(len(bodies[-1]["reply_markup"]["inline_keyboard"][0]), 2)
+
+    def test_a_section_that_goes_on_in_the_next_message_repeats_its_heading(self):
+        bodies = telegram.render(long_message(sections=1, items=40))
+        self.assertGreater(len(bodies), 1)
+        self.assertTrue(bodies[0]["text"].startswith("<b>Big digest</b>\n"))
+        for body in bodies[1:]:
+            self.assertTrue(body["text"].startswith("<b>Section 0</b>\n"))
+        numbers = [int(line.split(".", 1)[0]) for body in bodies for line in body["text"].split("\n")
+                   if line[:1].isdigit() and ". <a href=" in line]
+        self.assertEqual(numbers, list(range(1, 41)))
 
     def test_daily_list_has_one_telegram_message(self):
         digest = build_digest(default_config_path(), fetch=fixture_fetch(), now=at("2026-11-24"))

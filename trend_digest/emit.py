@@ -4,12 +4,18 @@ Made for callers that run this tool as a subprocess and do the sending
 themselves. The JSON is the build_digest() result plus these top-level keys:
 
     date, kind, items [{id, platform, url, title}], discord (one body),
-    telegram (one body), calls, cost_usd, skipped_platforms
+    telegram (the first body), telegram_parts (every body, in sending order),
+    calls, cost_usd, skipped_platforms
+
+A long digest is more than one Telegram message, so a caller that sends to
+Telegram sends every body in `telegram_parts`, in order.
 """
 
 import json
 import sys
 from datetime import datetime, timezone
+
+from .render import bodies_for
 
 
 def used_items(digest, kind):
@@ -25,13 +31,15 @@ def used_items(digest, kind):
 def emit_document(digest, kind, date=None):
     """Return the emit JSON as a dict."""
     usage = digest["usage"]
+    telegram = bodies_for("telegram", digest["messages"][0])
     doc = dict(digest)
     doc.update({
         "date": date or datetime.now(timezone.utc).date().isoformat(),
         "kind": kind,
         "items": used_items(digest, kind),
         "discord": digest["payloads"]["discord"][0],
-        "telegram": digest["payloads"]["telegram"][0],
+        "telegram": telegram[0],
+        "telegram_parts": telegram,
         "calls": usage["calls"],
         "cost_usd": usage["charged_usd"],
         "skipped_platforms": [f["source"] for f in usage["failed"]],

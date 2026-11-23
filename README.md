@@ -160,11 +160,15 @@ each message body, and sends and saves nothing. Python 3.11 or newer.
   If the digest stops, open the Actions tab, select **Trend digest** and click **Enable workflow**.
 - A webhook URL works like a password: anyone who has it can post to your channel. Keep it in
   Secrets only. If it leaks, delete the webhook in the app and make a new one, then update the secret.
-- Message limits are handled for you. When a digest is too long, the last items of the longest
-  section are dropped, and every item stays in the web archive.
+- Message limits are handled for you. When a digest is too long, Telegram splits it into several
+  messages, and the other channels drop the last items of the longest section. Every item stays in
+  the web archive.
   - Discord: at most 10 embeds and 6,000 characters of embed text per message.
   - Slack: at most 50 blocks; a section's text at most 3,000 characters.
-  - Telegram: at most 4,096 characters per message.
+  - Telegram: at most 4,096 characters per message, counting the visible text after HTML tags are
+    parsed. A digest that does not fit is split between items into several messages, sent in
+    reading order. When a section continues in the next message, that message repeats the section's
+    heading first. The link buttons are on the last message. No item is dropped.
   - Feishu: request body at most 20 KB; 100 messages a minute per bot. In the bot's security
     settings, use signature verification or none. With "custom keywords", choose a word that is
     always in the message, such as `EveryInfra`. An IP allowlist does not work, because GitHub's
@@ -241,7 +245,8 @@ The file holds everything `build_digest` returns, plus:
 | `kind` | `"daily"` or `"weekly"` |
 | `items` | `[{"id", "platform", "url", "title"}]` for every item in the digest |
 | `discord` | One Discord webhook body: `embeds`, `components`, `allowed_mentions`. Title and keywords are in the first embed. No `content`. |
-| `telegram` | One message: `{"text", "parse_mode": "HTML", ...}`, at most 4,096 characters |
+| `telegram` | The body of the first Telegram message: `{"text", "parse_mode": "HTML", ...}`. Kept for callers that only read this key. |
+| `telegram_parts` | The bodies of all Telegram messages, in sending order: usually one, several when the digest does not fit in one. Each has at most 4,096 visible characters. If you send to Telegram yourself, send every entry in order; sending only `telegram` drops the later messages. |
 | `calls`, `cost_usd` | API calls made and the total charge in USD |
 | `skipped_platforms` | Sources that failed or came back empty |
 

@@ -11,7 +11,8 @@ from html.parser import HTMLParser
 
 from helpers import FIXTURES, ROOT
 
-EMIT_KEYS = {"date", "kind", "items", "discord", "telegram", "calls", "cost_usd", "skipped_platforms"}
+EMIT_KEYS = {"date", "kind", "items", "discord", "telegram", "telegram_parts", "calls", "cost_usd",
+             "skipped_platforms"}
 
 
 def run_cli(args, fixtures=FIXTURES, extra_env=None):
@@ -67,6 +68,7 @@ class CliTest(unittest.TestCase):
         self.assertIsInstance(doc["discord"], dict)
         self.assertNotIn("content", doc["discord"])
         self.assertEqual(doc["telegram"]["parse_mode"], "HTML")
+        self.assertEqual(doc["telegram_parts"], [doc["telegram"]])
         self.assertEqual(doc["skipped_platforms"], ["producthunt/trending"])
         self.assertEqual(doc["calls"], 6)
         self.assertEqual(doc["cost_usd"], doc["usage"]["charged_usd"])
