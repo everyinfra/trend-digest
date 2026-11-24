@@ -1,0 +1,318 @@
+{
+ "version": 1,
+ "date": "2026-11-24",
+ "language": "en",
+ "title": "EveryInfra Trend Digest · Tue, Nov 24",
+ "keywords": [
+  "Code",
+  "agents",
+  "hours"
+ ],
+ "sections": [
+  {
+   "id": "github",
+   "label": "GitHub trending",
+   "icon_url": "https://www.google.com/s2/favicons?domain=github.com&sz=64",
+   "items": [
+    {
+     "id": "github:nginx/nginx",
+     "source": "github/trending",
+     "title": "nginx/nginx",
+     "url": "https://github.com/nginx/nginx",
+     "summary": "The official NGINX Open Source repository.",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 7,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 33207,
+       "delta": 158
+      }
+     ],
+     "metric_text": "★ 33,207 (+158 today) · C",
+     "why": "Infrastructure engineers can inspect or contribute directly to the core web server codebase.",
+     "extra": {
+      "platform": "github",
+      "rank": 7,
+      "language": "C"
+     }
+    },
+    {
+     "id": "github:openvinotoolkit/openvino",
+     "source": "github/trending",
+     "title": "openvinotoolkit/openvino",
+     "url": "https://github.com/openvinotoolkit/openvino",
+     "summary": "OpenVINO™ is an open source toolkit for optimizing and deploying AI inference",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 8,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 12447,
+       "delta": 187
+      }
+     ],
+     "metric_text": "★ 12,447 (+187 today) · C++",
+     "why": "Machine learning engineers can optimize and deploy AI inference models more efficiently.",
+     "extra": {
+      "platform": "github",
+      "rank": 8,
+      "language": "C++"
+     }
+    },
+    {
+     "id": "github:cathrynlavery/diagram-design",
+     "source": "github/trending",
+     "title": "cathrynlavery/diagram-design",
+     "url": "https://github.com/cathrynlavery/diagram-design",
+     "summary": "Editorial diagram design for Claude Code, Codex, GitHub Copilot, Cursor, Factory Droid, Qoder, and Pi. 52 diagram types. Self-contained HTML + SVG. No shadows. No Mermaid slop.",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 9,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 71965,
+       "delta": 794
+      }
+     ],
+     "metric_text": "★ 71,965 (+794 today) · HTML",
+     "why": "Developers using AI coding assistants can generate 52 types of standalone HTML and SVG diagrams.",
+     "extra": {
+      "platform": "github",
+      "rank": 9,
+      "language": "HTML"
+     }
+    }
+   ]
+  },
+  {
+   "id": "producthunt",
+   "label": "Product Hunt",
+   "icon_url": "https://www.google.com/s2/favicons?domain=producthunt.com&sz=64",
+   "items": [
+    {
+     "id": "producthunt:granular-build",
+     "source": "producthunt/trending",
+     "title": "Granular.Build",
+     "url": "https://www.producthunt.com/products/granular-build",
+     "summary": "Put your AI agents to work in a visual workspace",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": "Builders managing AI agents can coordinate their workflows inside a visual workspace.",
+     "extra": {
+      "platform": "producthunt"
+     }
+    },
+    {
+     "id": "producthunt:claude-code",
+     "source": "producthunt/trending",
+     "title": "Claude Ship",
+     "url": "https://www.producthunt.com/products/claude-code",
+     "summary": "Ship code as fast as you can write it",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": "Software developers can accelerate their deployment workflow to match their coding speed.",
+     "extra": {
+      "platform": "producthunt"
+     }
+    },
+    {
+     "id": "producthunt:hourly-journal",
+     "source": "producthunt/trending",
+     "title": "Hourly Journal",
+     "url": "https://www.producthunt.com/products/hourly-journal",
+     "summary": "Journal your hours, understand your days",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": "Professionals tracking their time can log hourly activities to analyze daily patterns.",
+     "extra": {
+      "platform": "producthunt"
+     }
+    }
+   ]
+  },
+  {
+   "id": "reddit",
+   "label": "Reddit · r/LocalLLaMA, r/MachineLearning",
+   "icon_url": "https://www.google.com/s2/favicons?domain=reddit.com&sz=64",
+   "items": [
+    {
+     "id": "reddit:1y4kikk",
+     "source": "reddit/subreddit_posts",
+     "title": "How the memory for 1M tokens shrank from 130TB to 890MB",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y4kikk/how_the_memory_for_1m_tokens_shrank_from_130tb_to/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 472,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 54,
+       "delta": null
+      }
+     ],
+     "metric_text": "472 upvotes · 54 comments · r/LocalLLaMA",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "Discussion"
+     }
+    },
+    {
+     "id": "reddit:1y4atw3",
+     "source": "reddit/subreddit_posts",
+     "title": "T3 Code drama (Chinese post on X)",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y4atw3/t3_code_drama_chinese_post_on_x/",
+     "summary": "https://x.com/realchendahuang/status/2125153472450527440 (I personally have no idea who Theo is, but I know some people here are his fans and aren't on X, so this is probably news to them) (translated with google transl…",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 356,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 171,
+       "delta": null
+      }
+     ],
+     "metric_text": "356 upvotes · 171 comments · r/LocalLLaMA",
+     "why": "Developers following Theo who are not on X can read a translated discussion about T3 Code.",
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "Discussion"
+     }
+    },
+    {
+     "id": "reddit:1y483vx",
+     "source": "reddit/subreddit_posts",
+     "title": "Arr october 2026 reviews [R]",
+     "url": "https://www.reddit.com/r/MachineLearning/comments/1y483vx/arr_october_2026_reviews_r/",
+     "summary": "Arr october cycle(NAACL and COLING) reviews are coming out in hours. talk about the reviews here",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 34,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 113,
+       "delta": null
+      }
+     ],
+     "metric_text": "34 upvotes · 113 comments · r/MachineLearning",
+     "why": "NAACL and COLING paper authors can discuss incoming October cycle peer reviews.",
+     "extra": {
+      "platform": "reddit",
+      "community": "MachineLearning",
+      "flair": "Research"
+     }
+    }
+   ]
+  },
+  {
+   "id": "google_news",
+   "label": "Google News",
+   "icon_url": "https://www.google.com/s2/favicons?domain=news.google.com&sz=64",
+   "items": [
+    {
+     "id": "gnews:be3639528db0",
+     "source": "google_news/search",
+     "title": "Signal Moves to Block AI Agents",
+     "url": "https://www.eff.org/deeplinks/2026/11/signal-now-blocks-ai-agents",
+     "summary": "",
+     "metrics": [],
+     "metric_text": "Electronic Frontier Foundation · 3h ago",
+     "why": "Privacy-focused developers and agent builders can see how Signal is restricting AI agents.",
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Electronic Frontier Foundation",
+      "published_at": "2026-11-24T19:43:49Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:6e5f032fb046",
+     "source": "google_news/search",
+     "title": "Even the best AI agents struggle with everyday life",
+     "url": "https://techcrunch.com/2026/11/24/even-the-best-ai-agents-struggle-with-everyday-life/",
+     "summary": "",
+     "metrics": [],
+     "metric_text": "TechCrunch · 1h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "TechCrunch",
+      "published_at": "2026-11-24T21:33:29Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:de6b526285ea",
+     "source": "google_news/search",
+     "title": "AI is moving way too fast",
+     "url": "https://www.natesilver.net/p/ai-is-moving-way-too-fast?utm_source=substack&utm_medium=email&utm_content=share&action=share",
+     "summary": "I think AI coding tools are miraculous. We're able to get far more productivity out of the same number of human hours. LLMs have been getting ...",
+     "metrics": [],
+     "metric_text": "Silver Bulletin · 4h ago",
+     "why": "Software developers can read a perspective on how AI coding tools boost hourly productivity.",
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Silver Bulletin",
+      "published_at": "2026-11-24T18:24:31Z",
+      "keyword": "AI coding tools"
+     }
+    }
+   ]
+  }
+ ],
+ "weekly": null,
+ "usage": {
+  "calls": 6,
+  "charged_usd": 0.004891,
+  "failed": []
+ },
+ "index_entry": {
+  "date": "2026-11-24",
+  "title": "EveryInfra Trend Digest · Tue, Nov 24",
+  "keywords": [
+   "Code",
+   "agents",
+   "hours"
+  ],
+  "count": 12
+ }
+}
