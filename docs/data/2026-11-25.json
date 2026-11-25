@@ -1,0 +1,285 @@
+{
+ "version": 1,
+ "date": "2026-11-25",
+ "language": "en",
+ "title": "EveryInfra Trend Digest · Wed, Nov 25",
+ "keywords": [
+  "AI agents",
+  "skills",
+  "NVIDIA"
+ ],
+ "sections": [
+  {
+   "id": "github",
+   "label": "GitHub trending",
+   "icon_url": "https://www.google.com/s2/favicons?domain=github.com&sz=64",
+   "items": [
+    {
+     "id": "github:mvanhorn/last30days-skill",
+     "source": "github/trending",
+     "title": "mvanhorn/last30days-skill",
+     "url": "https://github.com/mvanhorn/last30days-skill",
+     "summary": "AI agent skill that researches any topic across Reddit, X, YouTube, HN, Polymarket, and the web - then synthesizes a grounded summary",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 10,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 75038,
+       "delta": 950
+      }
+     ],
+     "metric_text": "★ 75,038 (+950 today) · Python",
+     "why": "Developers building automated research workflows can give their agents multi-platform search and synthesis across social sites, forums, and the web.",
+     "extra": {
+      "platform": "github",
+      "rank": 10,
+      "language": "Python"
+     }
+    },
+    {
+     "id": "github:google-labs-code/stitch-skills",
+     "source": "github/trending",
+     "title": "google-labs-code/stitch-skills",
+     "url": "https://github.com/google-labs-code/stitch-skills",
+     "summary": "A library of Agent Skills designed to work with the Stitch MCP server. Each skill follows the Agent Skills open standard, for compatibility with coding agents such as Antigravity, Gemini CLI, Claude Code, Cursor.",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 11,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 12951,
+       "delta": 352
+      }
+     ],
+     "metric_text": "★ 12,951 (+352 today) · TypeScript",
+     "why": null,
+     "extra": {
+      "platform": "github",
+      "rank": 11,
+      "language": "TypeScript"
+     }
+    },
+    {
+     "id": "github:mjmirza/app-store-compliance",
+     "source": "github/trending",
+     "title": "mjmirza/app-store-compliance",
+     "url": "https://github.com/mjmirza/app-store-compliance",
+     "summary": "Avoid common App Store and Google Play rejections. Open playbook and pre-submission guard with 124 documented rejection patterns and fixes, privacy manifest and Data safety checks, 114 tracked deadlines (EU AI Act, DSA,…",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 12,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 6433,
+       "delta": 853
+      }
+     ],
+     "metric_text": "★ 6,433 (+853 today) · Shell",
+     "why": "Mobile developers can catch store-rejection issues and track regulatory deadlines before submitting builds, with 13% of the repo's stars arriving today.",
+     "extra": {
+      "platform": "github",
+      "rank": 12,
+      "language": "Shell"
+     }
+    },
+    {
+     "id": "github:Tracer-Cloud/opensre",
+     "source": "github/trending",
+     "title": "Tracer-Cloud/opensre",
+     "url": "https://github.com/Tracer-Cloud/opensre",
+     "summary": "The open-source agent for CI/CD reliability.",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 13,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 15491,
+       "delta": 343
+      }
+     ],
+     "metric_text": "★ 15,491 (+343 today) · Python",
+     "why": "DevOps and platform engineers get an open-source agent dedicated to maintaining stability across continuous integration and delivery pipelines.",
+     "extra": {
+      "platform": "github",
+      "rank": 13,
+      "language": "Python"
+     }
+    }
+   ]
+  },
+  {
+   "id": "reddit",
+   "label": "Reddit · r/LocalLLaMA, r/MachineLearning",
+   "icon_url": "https://www.google.com/s2/favicons?domain=reddit.com&sz=64",
+   "items": [
+    {
+     "id": "reddit:1y4yrts",
+     "source": "reddit/subreddit_posts",
+     "title": "NVIDIA just quietly dropped open weights for Nemotron-Labs-Image-30B-A3B",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y4yrts/nvidia_just_quietly_dropped_open_weights_for/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 560,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 67,
+       "delta": null
+      }
+     ],
+     "metric_text": "560 upvotes · 67 comments · r/LocalLLaMA",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "New Model"
+     }
+    },
+    {
+     "id": "reddit:1y5blyd",
+     "source": "reddit/subreddit_posts",
+     "title": "another cut of nvidia gpu",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y5blyd/another_cut_of_nvidia_gpu/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 554,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 242,
+       "delta": null
+      }
+     ],
+     "metric_text": "554 upvotes · 242 comments · r/LocalLLaMA",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "News"
+     }
+    },
+    {
+     "id": "reddit:1y50x62",
+     "source": "reddit/subreddit_posts",
+     "title": "Letting each attention head choose which earlier heads it reads from, per token (LoomFormer) [R]",
+     "url": "https://www.reddit.com/r/MachineLearning/comments/1y50x62/letting_each_attention_head_choose_which_earlier/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 23,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 2,
+       "delta": null
+      }
+     ],
+     "metric_text": "23 upvotes · 2 comments · r/MachineLearning",
+     "why": "ML researchers exploring transformer architectures can examine a mechanism where attention heads dynamically select earlier heads on a per-token basis.",
+     "extra": {
+      "platform": "reddit",
+      "community": "MachineLearning",
+      "flair": "Research"
+     }
+    }
+   ]
+  },
+  {
+   "id": "google_news",
+   "label": "Google News",
+   "icon_url": "https://www.google.com/s2/favicons?domain=news.google.com&sz=64",
+   "items": [
+    {
+     "id": "gnews:de478ea7a63a",
+     "source": "google_news/search",
+     "title": "What to know before using AI agents for Black Friday shopping",
+     "url": "https://www.npr.org/2026/11/25/nx-s1-6048524/what-to-know-before-using-ai-agents-for-black-friday-shopping",
+     "summary": "59% of U.S. shoppers plan to use AI for holiday shopping this weekend, according to the National Retail Federation.",
+     "metrics": [],
+     "metric_text": "NPR · 8h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "NPR",
+      "published_at": "2026-11-25T13:51:56Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:b3089bcb0439",
+     "source": "google_news/search",
+     "title": "AI Agents in Healthcare: 4 Lessons from HLTH 2026",
+     "url": "https://sierra.ai/blog/ai-agents-healthcare-hlth-2026",
+     "summary": "",
+     "metrics": [],
+     "metric_text": "Sierra AI Agents · 1h ago",
+     "why": "Developers deploying healthcare automation can review four takeaways from HLTH 2026 on real-world clinical and patient-facing agent adoption.",
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Sierra AI Agents",
+      "published_at": "2026-11-25T20:15:59Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:5aa1b6877eab",
+     "source": "google_news/search",
+     "title": "AI coding tools are generating \"disposable\" software. Their impact might linger",
+     "url": "https://www.thestack.technology/ai-coding-tools-are-generating-disposable-software-their-impact-might-linger/",
+     "summary": "In a recent report, research firm Gartner predicted that by 2029, 80% of new applications will be disposable. They define a disposable app as an ...",
+     "metrics": [],
+     "metric_text": "www.thestack.technology · 13h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "www.thestack.technology",
+      "published_at": "2026-11-25T08:18:06Z",
+      "keyword": "AI coding tools"
+     }
+    }
+   ]
+  }
+ ],
+ "weekly": null,
+ "usage": {
+  "calls": 6,
+  "charged_usd": 0.003502,
+  "failed": [
+   {
+    "source": "producthunt/trending",
+    "reason": "empty"
+   }
+  ]
+ },
+ "index_entry": {
+  "date": "2026-11-25",
+  "title": "EveryInfra Trend Digest · Wed, Nov 25",
+  "keywords": [
+   "AI agents",
+   "skills",
+   "NVIDIA"
+  ],
+  "count": 10
+ }
+}
