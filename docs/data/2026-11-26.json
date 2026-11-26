@@ -1,0 +1,318 @@
+{
+ "version": 1,
+ "date": "2026-11-26",
+ "language": "en",
+ "title": "EveryInfra Trend Digest · Thu, Nov 26",
+ "keywords": [
+  "agents",
+  "Mac",
+  "companies"
+ ],
+ "sections": [
+  {
+   "id": "github",
+   "label": "GitHub trending",
+   "icon_url": "https://www.google.com/s2/favicons?domain=github.com&sz=64",
+   "items": [
+    {
+     "id": "github:toeverything/AFFiNE",
+     "source": "github/trending",
+     "title": "toeverything/AFFiNE",
+     "url": "https://github.com/toeverything/AFFiNE",
+     "summary": "There can be more than Notion and Miro. AFFiNE(pronounced [ə‘fain]) is a next-gen knowledge base that brings planning, sorting and creating all together. Privacy first, open-source, customizable and ready to use.",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 14,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 78917,
+       "delta": 521
+      }
+     ],
+     "metric_text": "★ 78,917 (+521 today) · TypeScript",
+     "why": null,
+     "extra": {
+      "platform": "github",
+      "rank": 14,
+      "language": "TypeScript"
+     }
+    },
+    {
+     "id": "github:XiaoYouChR/Ghost-Downloader-3",
+     "source": "github/trending",
+     "title": "XiaoYouChR/Ghost-Downloader-3",
+     "url": "https://github.com/XiaoYouChR/Ghost-Downloader-3",
+     "summary": "The only downloader you need. 下载器的集大成者。",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 15,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 19047,
+       "delta": 887
+      }
+     ],
+     "metric_text": "★ 19,047 (+887 today) · Python",
+     "why": null,
+     "extra": {
+      "platform": "github",
+      "rank": 15,
+      "language": "Python"
+     }
+    },
+    {
+     "id": "github:zhouxiaoka/autoclip",
+     "source": "github/trending",
+     "title": "zhouxiaoka/autoclip",
+     "url": "https://github.com/zhouxiaoka/autoclip",
+     "summary": "AutoClip｜The open-source OpusClip alternative — local-first AI clipping & MCP server, zero subscriptions. 一个链接，一键出片。开源 AI 视频剪辑桌面工具，将播客、访谈、课程等长视频自动剪成短视频，生成字幕、封面和发布文案，适配抖音、小红书、TikTok、Reels 与 YouTube Shorts。",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": 16,
+       "delta": null
+      },
+      {
+       "label": "stars",
+       "value": 16880,
+       "delta": 770
+      }
+     ],
+     "metric_text": "★ 16,880 (+770 today) · Python",
+     "why": null,
+     "extra": {
+      "platform": "github",
+      "rank": 16,
+      "language": "Python"
+     }
+    }
+   ]
+  },
+  {
+   "id": "producthunt",
+   "label": "Product Hunt",
+   "icon_url": "https://www.google.com/s2/favicons?domain=producthunt.com&sz=64",
+   "items": [
+    {
+     "id": "producthunt:ottante",
+     "source": "producthunt/trending",
+     "title": "Ottante",
+     "url": "https://www.producthunt.com/products/ottante",
+     "summary": "Checks the work your AI agents did, right on your Mac",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": null,
+     "extra": {
+      "platform": "producthunt"
+     }
+    },
+    {
+     "id": "producthunt:superloupe",
+     "source": "producthunt/trending",
+     "title": "SuperLoupe",
+     "url": "https://www.producthunt.com/products/superloupe",
+     "summary": "search inside anything on your Mac",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": null,
+     "extra": {
+      "platform": "producthunt"
+     }
+    },
+    {
+     "id": "producthunt:extraorbital-deleted-1365752",
+     "source": "producthunt/trending",
+     "title": "ExtraOrbital",
+     "url": "https://www.producthunt.com/products/extraorbital-deleted-1365752",
+     "summary": "✦ Open bar databases, storage buckets & AI keys for agents",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": null,
+     "extra": {
+      "platform": "producthunt"
+     }
+    }
+   ]
+  },
+  {
+   "id": "reddit",
+   "label": "Reddit · r/LocalLLaMA, r/MachineLearning",
+   "icon_url": "https://www.google.com/s2/favicons?domain=reddit.com&sz=64",
+   "items": [
+    {
+     "id": "reddit:1y5nllv",
+     "source": "reddit/subreddit_posts",
+     "title": "Latency doesn't lie: Jev is (probably) Qwen3.5-35B-A3B!",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y5nllv/latency_doesnt_lie_jev_is_probably_qwen3535ba3b/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 599,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 74,
+       "delta": null
+      }
+     ],
+     "metric_text": "599 upvotes · 74 comments · r/LocalLLaMA",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "News"
+     }
+    },
+    {
+     "id": "reddit:1y5ysad",
+     "source": "reddit/subreddit_posts",
+     "title": "Reuters confirms: Cutting off distillation and compute works and slows down Chinese Models massively",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y5ysad/reuters_confirms_cutting_off_distillation_and/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 565,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 439,
+       "delta": null
+      }
+     ],
+     "metric_text": "565 upvotes · 439 comments · r/LocalLLaMA",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "Resources"
+     }
+    },
+    {
+     "id": "reddit:1y67spi",
+     "source": "reddit/subreddit_posts",
+     "title": "Do we really need LLM ACs at ICLR? [D]",
+     "url": "https://www.reddit.com/r/MachineLearning/comments/1y67spi/do_we_really_need_llm_acs_at_iclr_d/",
+     "summary": "I am a bit salty. Since the end of the review phase, two ACs sent messages to start a discussion. Both messages summarized the status, asked individual reviewers to take positions/do work, and both were 100% AI generate…",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 21,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 12,
+       "delta": null
+      }
+     ],
+     "metric_text": "21 upvotes · 12 comments · r/MachineLearning",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "MachineLearning",
+      "flair": "Discussion"
+     }
+    }
+   ]
+  },
+  {
+   "id": "google_news",
+   "label": "Google News",
+   "icon_url": "https://www.google.com/s2/favicons?domain=news.google.com&sz=64",
+   "items": [
+    {
+     "id": "gnews:d0c111f37267",
+     "source": "google_news/search",
+     "title": "What to Know Before Using AI Agents for Black Friday Shopping",
+     "url": "https://www.kqed.org/news/12111568/what-to-know-before-using-ai-agents-for-black-friday-shopping",
+     "summary": "Here are some tips – and notes of caution – before using AI as your personal holiday shopper. Treat AI searches like a conversation with a kid.",
+     "metrics": [],
+     "metric_text": "KQED · 7h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "KQED",
+      "published_at": "2026-11-26T15:00:00Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:16452e6243e2",
+     "source": "google_news/search",
+     "title": "AI agents used in five cyber attacks in Switzerland, government says",
+     "url": "https://www.reuters.com/legal/litigation/ai-agents-used-five-cyber-attacks-switzerland-government-says-2026-11-26/",
+     "summary": "Five cyber attacks in the last ​few days in Switzerland ‌used AI agents to target companies and operators of ​critical infrastructure,",
+     "metrics": [],
+     "metric_text": "Reuters · 9h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Reuters",
+      "published_at": "2026-11-26T12:50:31Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:ac6e1cbbccdd",
+     "source": "google_news/search",
+     "title": "How Companies Measure Real AI Coding Tool Adoption",
+     "url": "https://mexicobusiness.news/talent/news/how-companies-measure-real-ai-coding-tool-adoption",
+     "summary": "Companies using AI coding assistants are replacing license counts with layered metrics. These track how intensively engineers use the tools, how ...",
+     "metrics": [],
+     "metric_text": "Mexico Business News · 2h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Mexico Business News",
+      "published_at": "2026-11-26T19:26:19Z",
+      "keyword": "AI coding tools"
+     }
+    }
+   ]
+  }
+ ],
+ "weekly": null,
+ "usage": {
+  "calls": 6,
+  "charged_usd": 0.004891,
+  "failed": []
+ },
+ "index_entry": {
+  "date": "2026-11-26",
+  "title": "EveryInfra Trend Digest · Thu, Nov 26",
+  "keywords": [
+   "agents",
+   "Mac",
+   "companies"
+  ],
+  "count": 12
+ }
+}
