@@ -1,0 +1,252 @@
+{
+ "version": 1,
+ "date": "2026-11-27",
+ "language": "en",
+ "title": "EveryInfra Trend Digest · Fri, Nov 27",
+ "keywords": [
+  "AI",
+  "Agents",
+  "Coding"
+ ],
+ "sections": [
+  {
+   "id": "producthunt",
+   "label": "Product Hunt",
+   "icon_url": "https://www.google.com/s2/favicons?domain=producthunt.com&sz=64",
+   "items": [
+    {
+     "id": "producthunt:rightfont",
+     "source": "producthunt/trending",
+     "title": "RightFont 2026",
+     "url": "https://www.producthunt.com/products/rightfont",
+     "summary": "The right font, right now.",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": null,
+     "extra": {
+      "platform": "producthunt"
+     }
+    },
+    {
+     "id": "producthunt:wizstar",
+     "source": "producthunt/trending",
+     "title": "Wizstar R1",
+     "url": "https://www.producthunt.com/products/wizstar",
+     "summary": "Seedance 2.0-level product videos at a lower cost",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": "Ecommerce teams and marketers can generate high-end product videos on a tighter budget.",
+     "extra": {
+      "platform": "producthunt"
+     }
+    },
+    {
+     "id": "producthunt:depost-ai",
+     "source": "producthunt/trending",
+     "title": "Depost AI",
+     "url": "https://www.producthunt.com/products/depost-ai",
+     "summary": "The LinkedIn AI agent that learns what works for your brand",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": "Founders and social media managers can automate LinkedIn content tailored to their brand performance.",
+     "extra": {
+      "platform": "producthunt"
+     }
+    },
+    {
+     "id": "producthunt:slay-3",
+     "source": "producthunt/trending",
+     "title": "slay",
+     "url": "https://www.producthunt.com/products/slay-3",
+     "summary": "AI composition guide camera app for iPhone",
+     "metrics": [
+      {
+       "label": "rank",
+       "value": null,
+       "delta": null
+      }
+     ],
+     "metric_text": "",
+     "why": "iPhone photographers can use AI framing guidance while shooting photos.",
+     "extra": {
+      "platform": "producthunt"
+     }
+    }
+   ]
+  },
+  {
+   "id": "reddit",
+   "label": "Reddit · r/LocalLLaMA, r/MachineLearning",
+   "icon_url": "https://www.google.com/s2/favicons?domain=reddit.com&sz=64",
+   "items": [
+    {
+     "id": "reddit:1y6h57r",
+     "source": "reddit/subreddit_posts",
+     "title": "Nvidia halts chip shipments to South-East Asia amid US crackdown",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y6h57r/nvidia_halts_chip_shipments_to_southeast_asia/",
+     "summary": "",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 345,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 57,
+       "delta": null
+      }
+     ],
+     "metric_text": "345 upvotes · 57 comments · r/LocalLLaMA",
+     "why": "Hardware buyers and AI infrastructure teams in South-East Asia face a sudden halt in Nvidia chip supply.",
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "News"
+     }
+    },
+    {
+     "id": "reddit:1y6evzy",
+     "source": "reddit/subreddit_posts",
+     "title": "My experience with Qwen_3.8_27B after two months of heavy usage",
+     "url": "https://www.reddit.com/r/LocalLLaMA/comments/1y6evzy/my_experience_with_qwen_38_27b_after_two_months/",
+     "summary": "Hi everyone, I've been using Qwen 3.8 27B for more than two months now, across a wide range of use cases: system administration, coding, cybersecurity, Bible studies, and a whole lot more. I'm doing about 80% of my AI u…",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 289,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 173,
+       "delta": null
+      }
+     ],
+     "metric_text": "289 upvotes · 173 comments · r/LocalLLaMA",
+     "why": null,
+     "extra": {
+      "platform": "reddit",
+      "community": "LocalLLaMA",
+      "flair": "Discussion"
+     }
+    },
+    {
+     "id": "reddit:1y6k7ds",
+     "source": "reddit/subreddit_posts",
+     "title": "What models/harness do you use for ML/RL research and experimentation? [D]",
+     "url": "https://www.reddit.com/r/MachineLearning/comments/1y6k7ds/what_modelsharness_do_you_use_for_mlrl_research/",
+     "summary": "I have been using Claude Code for a while now, but it seems it's going to be unsuitable for my current project. I am planning on doing some RL experiments using transformers for a complex N player game with large action…",
+     "metrics": [
+      {
+       "label": "upvotes",
+       "value": 25,
+       "delta": null
+      },
+      {
+       "label": "comments",
+       "value": 7,
+       "delta": null
+      }
+     ],
+     "metric_text": "25 upvotes · 7 comments · r/MachineLearning",
+     "why": "Machine learning researchers running transformer reinforcement learning experiments can compare agent harnesses beyond Claude Code.",
+     "extra": {
+      "platform": "reddit",
+      "community": "MachineLearning",
+      "flair": "Discussion"
+     }
+    }
+   ]
+  },
+  {
+   "id": "google_news",
+   "label": "Google News",
+   "icon_url": "https://www.google.com/s2/favicons?domain=news.google.com&sz=64",
+   "items": [
+    {
+     "id": "gnews:dafeb75c7d6b",
+     "source": "google_news/search",
+     "title": "AI Agents Will Take The Middleman's Chores, Not Its Risks",
+     "url": "https://www.forbes.com/sites/stephenwunker/2026/11/27/ai-agents-will-take-the-middlemans-chores-not-its-risks/",
+     "summary": "Agentic commerce is transformative for \"middleman\" businesses, and it's not all bad news. Leaders from Expedia and Northern Trust say what ...",
+     "metrics": [],
+     "metric_text": "Forbes · 7h ago",
+     "why": null,
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Forbes",
+      "published_at": "2026-11-27T14:00:00Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:48ecbdae7c56",
+     "source": "google_news/search",
+     "title": "How to Set Up AI Agents That Work Toward a Million-Dollar Business Goal Instead of Following Prompts",
+     "url": "https://www.entrepreneur.com/building-a-business/the-ai-setup-so-powerful-you-give-it-a-million-dollar-goal-instead-of-a-prompt",
+     "summary": "",
+     "metrics": [],
+     "metric_text": "Entrepreneur · 38m ago",
+     "why": "Builders designing autonomous workflows can learn a setup for goal-driven agents instead of prompt-by-prompt execution.",
+     "extra": {
+      "platform": "google_news",
+      "outlet": "Entrepreneur",
+      "published_at": "2026-11-27T21:08:32Z",
+      "keyword": "AI agents"
+     }
+    },
+    {
+     "id": "gnews:4c9dc97c1c66",
+     "source": "google_news/search",
+     "title": "Efficiency gains from AI coding can be lost in review",
+     "url": "https://techinformed.com/efficiency-gains-from-ai-coding-can-be-lost-in-review/",
+     "summary": "Although 71% reported faster software development after adopting AI coding tools, only 44% said the tools had reduced software delivery costs.",
+     "metrics": [],
+     "metric_text": "TechInformed · 4h ago",
+     "why": "Engineering leads can examine why faster AI-assisted development often stalls during code review without lowering delivery costs.",
+     "extra": {
+      "platform": "google_news",
+      "outlet": "TechInformed",
+      "published_at": "2026-11-27T17:45:26Z",
+      "keyword": "AI coding tools"
+     }
+    }
+   ]
+  }
+ ],
+ "weekly": null,
+ "usage": {
+  "calls": 6,
+  "charged_usd": 0.004891,
+  "failed": []
+ },
+ "index_entry": {
+  "date": "2026-11-27",
+  "title": "EveryInfra Trend Digest · Fri, Nov 27",
+  "keywords": [
+   "AI",
+   "Agents",
+   "Coding"
+  ],
+  "count": 10
+ }
+}
